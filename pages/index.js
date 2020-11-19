@@ -1,209 +1,272 @@
-import Head from 'next/head'
+import Head from "next/head";
+import React, { Component } from "react";
+import Link from "next/link";
+import Router from "next/router";
+import ClassBased from "./classbased";
 
-export default function Home() {
-  return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+class Home extends Component {
+	// special Lifecycle Hook
 
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+	// static: it can be called without instantiating (creating an obj)
+	// async: it doesn't return something instantly
 
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
+	// async
+	static async getInitialProps(context) {
+		console.log(context);
 
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+		// since this is an async method, we can use await, await for something to resolve
 
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+		const promise = new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve({ appName: "Flexer's Site" });
+			}, 1000);
+		});
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+		// promise.then() for listening
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+		return promise;
+	}
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
+	render() {
+		let greeting = <a href="https://nextjs.org">Next.js!</a>;
 
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+		if (this.props.appName) {
+			greeting = <span>{this.props.appName}</span>;
+		}
 
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+		return (
+			<div className="container">
+				<Head>
+					<title>Create Next App</title>
+					<link rel="icon" href="/favicon.ico" />
+				</Head>
 
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+				<main>
+					<h1 className="title">Welcome to {greeting}</h1>
 
-        footer img {
-          margin-left: 0.5rem;
-        }
+					<p className="description">
+						Get started by editing <code>pages/index.js</code>
+					</p>
 
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+					{/* testing code! */}
+					<p>
+						If you want to visit auth:{" "}
+						<Link href="/auth">
+							<a>auth</a>
+						</Link>
+						<b>
+							<p>Or click on</p>
+						</b>
+						<button onClick={() => Router.push("/classbased")}>
+							Click Me! (to go to ClassBased component)
+						</button>
+					</p>
 
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
+					<div className="grid">
+						<a href="https://nextjs.org/docs" className="card">
+							<h3>Documentation &rarr;</h3>
+							<p>
+								Find in-depth information about Next.js features
+								and API.
+							</p>
+						</a>
 
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
+						<a href="https://nextjs.org/learn" className="card">
+							<h3>Learn &rarr;</h3>
+							<p>
+								Learn about Next.js in an interactive course
+								with quizzes!
+							</p>
+						</a>
 
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
+						<a
+							href="https://github.com/vercel/next.js/tree/master/examples"
+							className="card"
+						>
+							<h3>Examples &rarr;</h3>
+							<p>
+								Discover and deploy boilerplate example Next.js
+								projects.
+							</p>
+						</a>
 
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
+						<a
+							href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+							className="card"
+						>
+							<h3>Deploy &rarr;</h3>
+							<p>
+								Instantly deploy your Next.js site to a public
+								URL with Vercel.
+							</p>
+						</a>
+					</div>
+				</main>
 
-        .title,
-        .description {
-          text-align: center;
-        }
+				<footer>
+					<a
+						href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Powered by{" "}
+						<img
+							src="/vercel.svg"
+							alt="Vercel Logo"
+							className="logo"
+						/>
+					</a>
+				</footer>
 
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
+				<style jsx>{`
+					.container {
+						min-height: 100vh;
+						padding: 0 0.5rem;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+					}
 
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
+					main {
+						padding: 5rem 0;
+						flex: 1;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+					}
 
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
+					footer {
+						width: 100%;
+						height: 100px;
+						border-top: 1px solid #eaeaea;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
 
-          max-width: 800px;
-          margin-top: 3rem;
-        }
+					footer img {
+						margin-left: 0.5rem;
+					}
 
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
+					footer a {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
 
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
+					a {
+						color: inherit;
+						text-decoration: none;
+					}
 
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
+					.title a {
+						color: #0070f3;
+						text-decoration: none;
+					}
 
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
+					.title a:hover,
+					.title a:focus,
+					.title a:active {
+						text-decoration: underline;
+					}
 
-        .logo {
-          height: 1em;
-        }
+					.title {
+						margin: 0;
+						line-height: 1.15;
+						font-size: 4rem;
+					}
 
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
+					.title,
+					.description {
+						text-align: center;
+					}
 
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
+					.description {
+						line-height: 1.5;
+						font-size: 1.5rem;
+					}
 
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+					code {
+						background: #fafafa;
+						border-radius: 5px;
+						padding: 0.75rem;
+						font-size: 1.1rem;
+						font-family: Menlo, Monaco, Lucida Console,
+							Liberation Mono, DejaVu Sans Mono,
+							Bitstream Vera Sans Mono, Courier New, monospace;
+					}
+
+					.grid {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-wrap: wrap;
+
+						max-width: 800px;
+						margin-top: 3rem;
+					}
+
+					.card {
+						margin: 1rem;
+						flex-basis: 45%;
+						padding: 1.5rem;
+						text-align: left;
+						color: inherit;
+						text-decoration: none;
+						border: 1px solid #eaeaea;
+						border-radius: 10px;
+						transition: color 0.15s ease, border-color 0.15s ease;
+					}
+
+					.card:hover,
+					.card:focus,
+					.card:active {
+						color: #0070f3;
+						border-color: #0070f3;
+					}
+
+					.card h3 {
+						margin: 0 0 1rem 0;
+						font-size: 1.5rem;
+					}
+
+					.card p {
+						margin: 0;
+						font-size: 1.25rem;
+						line-height: 1.5;
+					}
+
+					.logo {
+						height: 1em;
+					}
+
+					@media (max-width: 600px) {
+						.grid {
+							width: 100%;
+							flex-direction: column;
+						}
+					}
+				`}</style>
+
+				<style jsx global>{`
+					html,
+					body {
+						padding: 0;
+						margin: 0;
+						font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
+							Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+							Droid Sans, Helvetica Neue, sans-serif;
+					}
+
+					* {
+						box-sizing: border-box;
+					}
+				`}</style>
+			</div>
+		);
+	}
 }
+
+export default Home;
