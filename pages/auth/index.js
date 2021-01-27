@@ -22,7 +22,7 @@ const authIndexPage = (props) => {
 	);
 };
 
-/* gets a prop that is async too! */
+/* gets a prop that is async */
 authIndexPage.getInitialProps = (context) => {
 	// you can console log context to see it
 	const promise = new Promise((res, rej) => {
