@@ -3,7 +3,7 @@
 <br>
 <br>
 
-# Next JS
+# Next JS!
 
 A library building up on React, it is still React.
 
